@@ -40,7 +40,6 @@ public class ChestDefinition {
 		if(chestLoc != null) {
 
 			Chest chest = plugin.dataSource.getChest(chestLoc);
-			//boolean locked = ChestDefinition.isLocked(player.getWorld().getBlockAt(chestLoc), player, plugin);
 			if(!chest.isLocked()) {
 				player.sendMessage(ChatColor.DARK_GREEN + "The selected Chest is already Unlocked!");
 				return false;
@@ -55,33 +54,25 @@ public class ChestDefinition {
 				if(chest.getUserList() != null) {
 					chest.getUserList().clear();
 				}
-				//plugin.dataSource.addChest(chest);
 				
 				if(plugin.dataSource.addChest(chest)) {
 					player.sendMessage(ChatColor.DARK_GREEN + "Chest Successfully UnLocked!");
 				} else {
 					player.sendMessage(ChatColor.DARK_RED + "Chest Failed To UnLock!");
 				}
-			}
-			
-			//chest.setLocation(chestLoc);
-			//chest.UnLock();
-			
+			}			
 		}
 		return false;
 	}
 	
 	public static boolean isLocked(Block Chest, Player player, LockChest plugin) {
-		//if(plugin == null) { return ; }
 		if(plugin.permissions.canBreak(player)) {
 			return false;
 		}
 		//Search DataBase
 		if(plugin.dataSource.chestLocked(Chest.getLocation(), player.getName())) {
-			//player.sendMessage("true");
 			return true;
 		}
-		//player.sendMessage("false");
 		return false; //Default, Allowed to open Chest or not (If above Failed)
 	}
 	

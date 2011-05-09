@@ -32,7 +32,6 @@ public class lockDecoder {
 			}
 			
 			int Amount = player.getItemInHand().getAmount() - 1;
-			//player.sendMessage(String.valueOf(player.getItemInHand().getAmount()));
 			if(Amount <= 0) {
 				player.getInventory().setItemInHand(null);
 			} else {
@@ -46,10 +45,8 @@ public class lockDecoder {
 			if(Chance == 20) { dFail += 1; }
 			player.sendMessage(ChatColor.DARK_RED + "You have failed to unlock the Chest!");
 			
-
 			return true;
-		}
-		
+		}		
 		return true;
 	}
 	
