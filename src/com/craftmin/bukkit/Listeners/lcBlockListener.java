@@ -16,17 +16,12 @@ public class lcBlockListener extends BlockListener {
 		plugin = Plugin;
 	}
 	
-	//public void onBlockInteract(BlockInteractEvent event) {
-		
-	//}
-	
 	public void onBlockDamage(BlockDamageEvent event) {
 		if(event.getBlock().getTypeId() != 54) { return; }
 		if(plugin.isEnabled) { return; }
 		if(!ChestDefinition.isLocked(event.getBlock(), event.getPlayer(), plugin)) {
 			return;
 		}
-		//if(plugin.permissions.canBreak(event.getPlayer())) { return; }
 		event.setCancelled(true);
 	}
 	
@@ -45,7 +40,6 @@ public class lcBlockListener extends BlockListener {
 			}
 			return;
 		}
-		//if(plugin.permissions.canBreak(event.getPlayer())) { return; }
 		event.setCancelled(true);
 	}
 	
