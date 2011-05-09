@@ -19,10 +19,6 @@ public class lcPlayerListener extends PlayerListener {
 		plugin = Plugin;
 	}
 	
-	//public void onPlayerChat(PlayerChatEvent event) {
-	//	Command.processCommand(event);
-	//}///
-	
 	public void onPlayerCommandPreprocess(PlayerCommandPreprocessEvent event) {
 		if(!plugin.isEnabled) { return; }
 		Command.processCommand(event, plugin);
@@ -36,8 +32,6 @@ public class lcPlayerListener extends PlayerListener {
 			String grp = plugin.Manager.getHandler().getGroup(world, event.getPlayer().getName());
 			if(!plugin.Manager.getHandler().canGroupBuild(world, grp)) {
 				event.setCancelled(true);
-				//event.getPlayer().sendMessage(ChatColor.DARK_RED + "You have insufficient permissions to perform that action.");
-				//event.getPlayer().sendMessage(ChatColor.DARK_RED + "Please contact a Staff Member.");
 				return;
 			}			
 		}

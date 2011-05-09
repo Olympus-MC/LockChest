@@ -67,7 +67,6 @@ public class DataSource {
 					}
 					String UsersArray = configuration.getString(location);
 					if(UsersArray.contains("{")) {
-						//plugin.writeConsole("2");
 								String Users = UsersArray.substring(UsersArray.indexOf("{"), UsersArray.length());
 								if(Users.endsWith("}")) {
 									if(Users.startsWith("{")) {
@@ -79,7 +78,6 @@ public class DataSource {
 										boolean found = false;
 										for(String ply : Args) {
 											if(ply.equalsIgnoreCase(playerName.trim())) {
-												//plugin.writeConsole("Found");
 												found = true;
 											}
 										}
@@ -87,8 +85,6 @@ public class DataSource {
 											isLocked = false;
 										}
 									} else if(Users.length() > 0) {
-
-										//plugin.writeConsole("3");
 										if(Users.trim().equalsIgnoreCase(playerName.trim())) {
 											isLocked = false;
 										}
