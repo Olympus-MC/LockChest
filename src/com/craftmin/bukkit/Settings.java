@@ -11,6 +11,13 @@ public class Settings {
 	private int ironHoe = 0;
 	private int goldHoe = 0;
 	private int diamondHoe = 0;
+
+	private int baseRate = 0;
+	private int woodenRate = 0;
+	private int stoneRate = 0;
+	private int ironRate = 0;
+	private int goldRate = 0;
+	private int diamondRate = 0;
 	
 	public Settings() {
 		
@@ -78,6 +85,54 @@ public class Settings {
 
 	public boolean isAllowPicking() {
 		return allowPicking;
+	}
+
+	public void setBaseRate(int baseRate) {
+		this.baseRate = baseRate;
+	}
+
+	public int getBaseRate() {
+		return baseRate;
+	}
+
+	public void setWoodenRate(int woodenRate) {
+		this.woodenRate = woodenRate;
+	}
+
+	public int getWoodenRate() {
+		return woodenRate;
+	}
+
+	public void setStoneRate(int stoneRate) {
+		this.stoneRate = stoneRate;
+	}
+
+	public int getStoneRate() {
+		return stoneRate;
+	}
+
+	public void setIronRate(int ironRate) {
+		this.ironRate = ironRate;
+	}
+
+	public int getIronRate() {
+		return ironRate;
+	}
+
+	public void setGoldRate(int goldRate) {
+		this.goldRate = goldRate;
+	}
+
+	public int getGoldRate() {
+		return goldRate;
+	}
+
+	public void setDiamondRate(int diamondRate) {
+		this.diamondRate = diamondRate;
+	}
+
+	public int getDiamondRate() {
+		return diamondRate;
 	}
 	
 	

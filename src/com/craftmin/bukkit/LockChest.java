@@ -69,13 +69,19 @@ public class LockChest extends JavaPlugin {
 		configuration.load();
 		
 		mySettings = new Settings();
-		mySettings.setAllowOps(configuration.getBoolean("allowops", false));
-		mySettings.setAllowPicking(configuration.getBoolean("allowpicking", false));
+		mySettings.setAllowOps(configuration.getBoolean("allowops", true));
+		mySettings.setAllowPicking(configuration.getBoolean("allowpicking", true));
 		mySettings.setWoodenHoe(configuration.getInt("woodenhoe", 290));
 		mySettings.setStoneHoe(configuration.getInt("stonehoe", 291));
 		mySettings.setIronHoe(configuration.getInt("ironhoe", 292));
 		mySettings.setGoldHoe(configuration.getInt("goldhoe", 294));
 		mySettings.setDiamondHoe(configuration.getInt("diamondhoe", 293));
+		mySettings.setBaseRate(configuration.getInt("baserate", 40));
+		mySettings.setWoodenRate(configuration.getInt("woodenrate", 1));
+		mySettings.setStoneRate(configuration.getInt("stonerate", 5));
+		mySettings.setIronRate(configuration.getInt("ironrate", 8));
+		mySettings.setGoldRate(configuration.getInt("goldrate", 7));
+		mySettings.setDiamondRate(configuration.getInt("diamondrate", 20));
 		
 		if(Manager != null) {
 			mySettings.setUsingPermissions(true);

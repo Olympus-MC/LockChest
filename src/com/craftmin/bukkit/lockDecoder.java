@@ -19,7 +19,7 @@ public class lockDecoder {
 		int Chance = lcHoe.getHoeChanceVal(player.getItemInHand(), settings);
 		
 		if(Chance > 0) {
-			int cal = 40 - (Chance);
+			int cal = settings.getBaseRate() - (Chance);
 			int Success = rand.nextInt(cal);
 			
 			if(Success < Chance) {

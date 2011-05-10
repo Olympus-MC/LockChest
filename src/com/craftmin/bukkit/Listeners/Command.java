@@ -4,7 +4,6 @@ import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 import org.bukkit.event.player.PlayerCommandPreprocessEvent;
-
 import com.craftmin.bukkit.LockChest;
 import com.craftmin.bukkit.PlayerLists.lcPlayerListArgs;
 import com.craftmin.bukkit.chest.Chest;

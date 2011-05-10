@@ -6,15 +6,15 @@ public class lcHoe {
 
 	public static int getHoeChanceVal(ItemStack item, Settings settings) {
 		if(item.getTypeId() == settings.getWoodenHoe()) { //Wooden Hoe
-			return 1;
+			return settings.getWoodenRate();
 		} else if(item.getTypeId() == settings.getStoneHoe()) { //Stone Hoe
-			return 5;
+			return settings.getStoneRate();
 		} else if(item.getTypeId() == settings.getIronHoe()) { //Iron Hoe
-			return 8;
+			return settings.getIronRate();
 		} else if(item.getTypeId() == settings.getGoldHoe()) { //Gold Hoe
-			return 7;
+			return settings.getGoldRate();
 		} else if(item.getTypeId() == settings.getDiamondHoe()) { //Diamond Hoe
-			return 20;
+			return settings.getDiamondRate();
 		}	
 		return 0;
 	}
