@@ -70,6 +70,7 @@ public class LockChest extends JavaPlugin {
 		
 		mySettings = new Settings();
 		mySettings.setAllowOps(configuration.getBoolean("allowops", false));
+		mySettings.setAllowPicking(configuration.getBoolean("allowpicking", false));
 		mySettings.setWoodenHoe(configuration.getInt("woodenhoe", 290));
 		mySettings.setStoneHoe(configuration.getInt("stonehoe", 291));
 		mySettings.setIronHoe(configuration.getInt("ironhoe", 292));

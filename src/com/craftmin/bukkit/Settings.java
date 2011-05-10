@@ -3,6 +3,7 @@ package com.craftmin.bukkit;
 public class Settings {
 
 	private boolean allowOps = false;
+	private boolean allowPicking = true;
 	private boolean usingPermissions = false;
 
 	private int woodenHoe = 0;
@@ -69,6 +70,14 @@ public class Settings {
 
 	public int getDiamondHoe() {
 		return diamondHoe;
+	}
+
+	public void setAllowPicking(boolean allowPicking) {
+		this.allowPicking = allowPicking;
+	}
+
+	public boolean isAllowPicking() {
+		return allowPicking;
 	}
 	
 	
