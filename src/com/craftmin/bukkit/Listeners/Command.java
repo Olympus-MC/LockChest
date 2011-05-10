@@ -46,6 +46,10 @@ public class Command {
 					if(Commands.length > 1) {
 						switch(getCommandValue(Commands[1])) {
 							case CommandDefinition.LOCKCHEST_COMMAND_LOCK: {
+								if(plugin.permissions.isCommandRestricted(event.getPlayer(), "lockchest.lock")) {
+									event.getPlayer().sendMessage("You cannot use this command!");
+									return;
+								}
 									if(Commands.length >= 2) {
 										String[] Users = null;
 										boolean config = false;
@@ -86,15 +90,31 @@ public class Command {
 								event.getPlayer().sendMessage(ChatColor.GRAY + "    /lockchest lock player1,player2");
 								break;
 							} case CommandDefinition.LOCKCHEST_COMMAND_UNLOCK: {
+								if(plugin.permissions.isCommandRestricted(event.getPlayer(), "lockchest.unlock")) {
+									event.getPlayer().sendMessage("You cannot use this command!");
+									return;
+								}
 								ChestDefinition.unLock(event.getPlayer(), plugin);
 								break;
 							} case CommandDefinition.LOCKCHEST_COMMAND_DISABLE: {
+								if(plugin.permissions.isCommandRestricted(event.getPlayer(), "lockchest.disable")) {
+									event.getPlayer().sendMessage("You cannot use this command!");
+									return;
+								}
 								LockChest_ArmDisable(plugin, event.getPlayer());
 								break;
 							} case CommandDefinition.LOCKCHEST_COMMAND_ENABLE: {
+								if(plugin.permissions.isCommandRestricted(event.getPlayer(), "lockchest.enable")) {
+									event.getPlayer().sendMessage("You cannot use this command!");
+									return;
+								}
 								LockChest_ArmEnable(plugin, event.getPlayer());
 								break;
 							} case CommandDefinition.LOCKCHEST_COMMAND_CURRENT: {
+								if(plugin.permissions.isCommandRestricted(event.getPlayer(), "lockchest.current")) {
+									event.getPlayer().sendMessage("You cannot use this command!");
+									return;
+								}
 								Location bLoc = ChestDefinition.getSelectedChest(event.getPlayer().getName(), plugin.playerList);
 								String location = ChatColor.DARK_GREEN + "Current Selected Chest Location: " + ChatColor.WHITE;
 								if(bLoc == null) {
@@ -108,6 +128,10 @@ public class Command {
 								event.getPlayer().sendMessage(location);
 								break;
 							} case CommandDefinition.LOCKCHEST_COMMAND_ADDUSER: {
+								if(plugin.permissions.isCommandRestricted(event.getPlayer(), "lockchest.adduser")) {
+									event.getPlayer().sendMessage("You cannot use this command!");
+									return;
+								}
 								Location cLoc = ChestDefinition.getSelectedChest(event.getPlayer().getName(), plugin.playerList);
 								if(cLoc == null) {
 									event.getPlayer().sendMessage(ChatColor.DARK_GREEN + "None Selected");
@@ -151,6 +175,10 @@ public class Command {
 								event.getPlayer().sendMessage(ChatColor.GRAY + "    /lockchest adduser player1,player2");
 								break;
 							} case CommandDefinition.LOCKCHEST_COMMAND_REMOVEUSER: {
+								if(plugin.permissions.isCommandRestricted(event.getPlayer(), "lockchest.removeuser")) {
+									event.getPlayer().sendMessage("You cannot use this command!");
+									return;
+								}
 								Location cLoc = ChestDefinition.getSelectedChest(event.getPlayer().getName(), plugin.playerList);
 								if(cLoc == null) {
 									event.getPlayer().sendMessage(ChatColor.DARK_GREEN + "None Selected");

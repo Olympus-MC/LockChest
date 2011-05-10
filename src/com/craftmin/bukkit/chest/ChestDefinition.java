@@ -66,7 +66,7 @@ public class ChestDefinition {
 	}
 	
 	public static boolean isLocked(Block Chest, Player player, LockChest plugin) {
-		if(plugin.permissions.canBreak(player)) {
+		if(!plugin.permissions.isRestricted(player, "lockchest.break")) {
 			return false;
 		}
 		//Search DataBase

@@ -1,6 +1,7 @@
 package com.craftmin.bukkit;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.logging.Logger;
 
 import org.bukkit.event.Event;
@@ -55,14 +56,29 @@ public class LockChest extends JavaPlugin {
 		
 		addHooks();
 		
-		configuration = new Configuration(new File("plugins/LockChest/configuration.txt"));
+		//Apparently the Config didn't create itself. >:(
+		File config = new File("plugins/LockChest/configuration.txt");
+		if(!config.exists()) {
+			try {
+				config.createNewFile();
+			} catch (IOException e) {
+				writeConsole("Error Creating Config: " + e.getMessage());
+			}
+		}
+		configuration = new Configuration(config);
 		configuration.load();
 		
 		mySettings = new Settings();
 		mySettings.setAllowOps(configuration.getBoolean("allowops", false));
+		mySettings.setWoodenHoe(configuration.getInt("woodenhoe", 290));
+		mySettings.setStoneHoe(configuration.getInt("stonehoe", 291));
+		mySettings.setIronHoe(configuration.getInt("ironhoe", 292));
+		mySettings.setGoldHoe(configuration.getInt("goldhoe", 294));
+		mySettings.setDiamondHoe(configuration.getInt("diamondhoe", 293));
 		
 		if(Manager != null) {
 			mySettings.setUsingPermissions(true);
+			writeConsole("Using Permissions!");
 		} else {
 			mySettings.setUsingPermissions(false);
 		}
@@ -76,6 +92,9 @@ public class LockChest extends JavaPlugin {
 		permissions = new Permissions(this);
 		
 		isEnabled = true;
+		
+		configuration.save(); //Want to have it save it's generated Settings at one point...
+		
 		writeConsole("Enabled");
 		
 	}
