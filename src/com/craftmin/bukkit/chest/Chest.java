@@ -98,4 +98,13 @@ public class Chest {
 	public List<String> getUserList() {
 		return userList;
 	}
+	
+	public boolean isLockedForPlayer(String plyName) {
+		if(isLocked()) {
+			if(!containsPlayer(plyName)) {
+				return true;
+			}
+		}
+		return false;
+	}
 }

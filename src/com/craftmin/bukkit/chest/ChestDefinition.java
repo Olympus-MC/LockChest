@@ -17,7 +17,15 @@ public class ChestDefinition {
 			String realPlayer = plugin.playerList.getPlayerNameCorrection(playerName);
 			lcPlayerListArgs ReT = plugin.playerList.getPlayerArgs(realPlayer);
 			if(ReT != null) {
-				Chest chest = new Chest();
+				//Oops :C
+				Chest chest = plugin.dataSource.getChest(ReT.getBlockLocation());
+				if(chest != null) {
+					if(chest.isLockedForPlayer(player.getName())) {
+						player.sendMessage(ChatColor.DARK_RED + "You cannot access that chest!");
+						return false;
+					}
+				}
+				chest = new Chest();
 				chest.setLocation(ReT.getBlockLocation());
 				chest.Lock();
 				if(allowedPlayers != null) {
@@ -40,12 +48,16 @@ public class ChestDefinition {
 		if(chestLoc != null) {
 
 			Chest chest = plugin.dataSource.getChest(chestLoc);
-			if(!chest.isLocked()) {
-				player.sendMessage(ChatColor.DARK_GREEN + "The selected Chest is already Unlocked!");
-				return false;
-			}
+			//if(!chest.isLocked()) {
+			//	player.sendMessage(ChatColor.DARK_GREEN + "The selected Chest is already Unlocked!");
+			///	return false;
+			//}
 			
 			if(chest != null) {
+				if(chest.isLockedForPlayer(player.getName())) {
+					player.sendMessage(ChatColor.DARK_RED + "You cannot access that chest!");
+					return false;
+				}
 				if(!chest.isLocked()) {
 					player.sendMessage(ChatColor.DARK_GREEN + "The selected Chest is already Unlocked!");
 					return false;

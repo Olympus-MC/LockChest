@@ -140,6 +140,10 @@ public class Command {
 									if(chest == null) {
 										event.getPlayer().sendMessage(ChatColor.DARK_RED + "Error Reading Chest!");
 									} else {
+										if(chest.isLockedForPlayer(event.getPlayer().getName())) {
+											event.getPlayer().sendMessage(ChatColor.DARK_RED + "You cannot access that chest!");
+											return;
+										}
 										if(Commands.length >= 3) {
 											String ply = Commands[2];
 											if(ply != null) {
@@ -187,6 +191,10 @@ public class Command {
 									if(chest == null) {
 										event.getPlayer().sendMessage(ChatColor.DARK_RED + "Error Reading Chest!");
 									} else {
+										if(chest.isLockedForPlayer(event.getPlayer().getName())) {
+											event.getPlayer().sendMessage(ChatColor.DARK_RED + "You cannot access that chest!");
+											return;
+										}
 										if(Commands.length >= 3) {
 											String ply = Commands[2];
 											if(ply != null) {
@@ -260,6 +268,7 @@ public class Command {
 		plugin.playerList.put(player.getName(), args);
 		player.sendMessage(ChatColor.DARK_GREEN + "You may now select a Chest by Right Clicking it.");
 	}
+	
 	public static void LockChest_ArmDisable(LockChest plugin, Player player) {
 		if(plugin.playerList.containsPlayer(player.getName())) {
 			lcPlayerListArgs args = plugin.playerList.getPlayerArgs(player.getName());
