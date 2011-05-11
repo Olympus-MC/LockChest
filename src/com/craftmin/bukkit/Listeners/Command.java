@@ -79,7 +79,6 @@ public class Command {
 											Users = new String[1];
 											Users[0] = event.getPlayer().getName();
 										}
-	
 										ChestDefinition.Lock(event.getPlayer(), Users, plugin);
 										break;
 								}
@@ -135,7 +134,7 @@ public class Command {
 								if(cLoc == null) {
 									event.getPlayer().sendMessage(ChatColor.DARK_GREEN + "None Selected");
 								} else {
-									Chest chest = plugin.dataSource.getChest(cLoc);
+									Chest chest = plugin.dataSource.getChest(cLoc, event.getPlayer().getWorld().getName());
 									if(chest == null) {
 										event.getPlayer().sendMessage(ChatColor.DARK_RED + "Error Reading Chest!");
 									} else {
@@ -143,33 +142,7 @@ public class Command {
 											event.getPlayer().sendMessage(ChatColor.DARK_RED + "You cannot access that chest!");
 											return;
 										}
-										if(Commands.length >= 3) {
-											String ply = Commands[2];
-											if(ply != null) {
-												if(ply.contains(",") && event.getMessage().contains(" lock ")) {
-													String UsersTrimmed = event.getMessage().substring(
-															event.getMessage().indexOf(" lock ") + 7, 
-															event.getMessage().length()).trim();
-													String[] split = processInput(UsersTrimmed.split(","));
-													for(String uName : split) {
-														if(uName != null && uName.trim().length() > 0) {
-															chest.addUser(uName);
-														}
-													}
-												} else if(ply.trim().length() > 0) {
-													chest.addUser(ply);
-												}
-											}
-										}
-										if(plugin.dataSource.addChest(chest)) {
-											event.getPlayer().sendMessage(ChatColor.DARK_GREEN + 
-													"Saved Chest at: " + ChatColor.WHITE +
-													chest.locationToString());
-										} else {
-											event.getPlayer().sendMessage(ChatColor.DARK_RED + 
-													"Error Saving Chest at: " + ChatColor.WHITE +
-													chest.locationToString());
-										}
+										ChestDefinition.addUsers(Commands, event.getMessage(), chest, event.getPlayer(), plugin);
 										break;
 									}
 								}
@@ -186,7 +159,7 @@ public class Command {
 								if(cLoc == null) {
 									event.getPlayer().sendMessage(ChatColor.DARK_GREEN + "None Selected");
 								} else {
-									Chest chest = plugin.dataSource.getChest(cLoc);
+									Chest chest = plugin.dataSource.getChest(cLoc, event.getPlayer().getWorld().getName());
 									if(chest == null) {
 										event.getPlayer().sendMessage(ChatColor.DARK_RED + "Error Reading Chest!");
 									} else {
@@ -194,37 +167,7 @@ public class Command {
 											event.getPlayer().sendMessage(ChatColor.DARK_RED + "You cannot access that chest!");
 											return;
 										}
-										if(Commands.length >= 3) {
-											String ply = Commands[2];
-											if(ply != null) {
-												if(ply.contains(",") && event.getMessage().contains(" lock ")) {
-													String UsersTrimmed = event.getMessage().substring(
-															event.getMessage().indexOf(" lock ") + 7, 
-															event.getMessage().length()).trim();
-													String[] split = processInput(UsersTrimmed.split(","));
-													for(String uName : split) {
-														if(uName != null && uName.trim().length() > 0) {
-															if(chest.containsPlayer(uName)) {
-																chest.removeUserPlain(uName);
-															}
-														}
-													}
-												} else if(ply.trim().length() > 0) {
-													if(chest.containsPlayer(ply)) {
-														chest.removeUserPlain(ply);
-													}
-												}
-											}
-										}
-										if(plugin.dataSource.addChest(chest)) {
-											event.getPlayer().sendMessage(ChatColor.DARK_GREEN + 
-													"Saved Chest at: " + ChatColor.WHITE +
-													chest.locationToString());
-										} else {
-											event.getPlayer().sendMessage(ChatColor.DARK_RED + 
-													"Error Saving Chest at: " + ChatColor.WHITE +
-													chest.locationToString());
-										}
+										ChestDefinition.removeUsers(Commands, event.getMessage(), chest, event.getPlayer(), plugin);
 										break;
 									}
 								}

@@ -30,13 +30,13 @@ public class lcBlockListener extends BlockListener {
 		if(!plugin.isEnabled) { return; }
 		if(!ChestDefinition.isLocked(event.getBlock(), event.getPlayer(), plugin)) {
 			if(plugin.dataSource == null) { return; }
-			Chest chest = plugin.dataSource.getChest(event.getBlock().getLocation());
+			Chest chest = plugin.dataSource.getChest(event.getBlock().getLocation(), event.getPlayer().getWorld().getName());
 			if(chest != null) {
 				chest.UnLock();
 				if(chest.getUserList() != null) {
 					chest.getUserList().clear();
 				}
-				plugin.dataSource.addChest(chest);
+				plugin.dataSource.addChest(chest, event.getPlayer().getWorld().getName());
 			}
 			return;
 		}

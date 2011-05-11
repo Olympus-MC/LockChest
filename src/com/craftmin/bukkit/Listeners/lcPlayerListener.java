@@ -39,7 +39,6 @@ public class lcPlayerListener extends PlayerListener {
 			//if(event.getPlayer()() instanceof Player) {
 				Player ply = event.getPlayer();
 
-				
 				boolean locked = ChestDefinition.isLocked(event.getClickedBlock(), ply, plugin);
 				
 				if(!lockDecoder.isHoldingHoe(ply, plugin.mySettings)) {
