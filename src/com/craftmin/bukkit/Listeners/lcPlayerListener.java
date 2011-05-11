@@ -39,10 +39,9 @@ public class lcPlayerListener extends PlayerListener {
 			//if(event.getPlayer()() instanceof Player) {
 				Player ply = event.getPlayer();
 
-				
 				boolean locked = ChestDefinition.isLocked(event.getClickedBlock(), ply, plugin);
 				
-				if(!lockDecoder.isHoldingHoe(ply)) {
+				if(!lockDecoder.isHoldingHoe(ply, plugin.mySettings)) {
 					if(ply.getItemInHand().getTypeId() == 0) {
 						if(ChestDefinition.chestSelectionToggle(ply.getName(), plugin.playerList)) {
 							Location bLoc = event.getClickedBlock().getLocation();
@@ -61,7 +60,7 @@ public class lcPlayerListener extends PlayerListener {
 					event.setCancelled(locked);
 				} else {
 					if(locked) {
-						boolean ret = lockDecoder.processChest(ply, event.getClickedBlock());
+						boolean ret = lockDecoder.processChest(ply, event.getClickedBlock(), plugin.mySettings);
 						event.setCancelled(ret);
 					}
 				}

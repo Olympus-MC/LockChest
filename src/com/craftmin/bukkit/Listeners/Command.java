@@ -4,7 +4,6 @@ import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 import org.bukkit.event.player.PlayerCommandPreprocessEvent;
-
 import com.craftmin.bukkit.LockChest;
 import com.craftmin.bukkit.PlayerLists.lcPlayerListArgs;
 import com.craftmin.bukkit.chest.Chest;
@@ -46,6 +45,10 @@ public class Command {
 					if(Commands.length > 1) {
 						switch(getCommandValue(Commands[1])) {
 							case CommandDefinition.LOCKCHEST_COMMAND_LOCK: {
+								if(plugin.permissions.isCommandRestricted(event.getPlayer(), "lockchest.lock")) {
+									event.getPlayer().sendMessage("You cannot use this command!");
+									return;
+								}
 									if(Commands.length >= 2) {
 										String[] Users = null;
 										boolean config = false;
@@ -76,7 +79,6 @@ public class Command {
 											Users = new String[1];
 											Users[0] = event.getPlayer().getName();
 										}
-	
 										ChestDefinition.Lock(event.getPlayer(), Users, plugin);
 										break;
 								}
@@ -86,15 +88,31 @@ public class Command {
 								event.getPlayer().sendMessage(ChatColor.GRAY + "    /lockchest lock player1,player2");
 								break;
 							} case CommandDefinition.LOCKCHEST_COMMAND_UNLOCK: {
+								if(plugin.permissions.isCommandRestricted(event.getPlayer(), "lockchest.unlock")) {
+									event.getPlayer().sendMessage("You cannot use this command!");
+									return;
+								}
 								ChestDefinition.unLock(event.getPlayer(), plugin);
 								break;
 							} case CommandDefinition.LOCKCHEST_COMMAND_DISABLE: {
+								if(plugin.permissions.isCommandRestricted(event.getPlayer(), "lockchest.disable")) {
+									event.getPlayer().sendMessage("You cannot use this command!");
+									return;
+								}
 								LockChest_ArmDisable(plugin, event.getPlayer());
 								break;
 							} case CommandDefinition.LOCKCHEST_COMMAND_ENABLE: {
+								if(plugin.permissions.isCommandRestricted(event.getPlayer(), "lockchest.enable")) {
+									event.getPlayer().sendMessage("You cannot use this command!");
+									return;
+								}
 								LockChest_ArmEnable(plugin, event.getPlayer());
 								break;
 							} case CommandDefinition.LOCKCHEST_COMMAND_CURRENT: {
+								if(plugin.permissions.isCommandRestricted(event.getPlayer(), "lockchest.current")) {
+									event.getPlayer().sendMessage("You cannot use this command!");
+									return;
+								}
 								Location bLoc = ChestDefinition.getSelectedChest(event.getPlayer().getName(), plugin.playerList);
 								String location = ChatColor.DARK_GREEN + "Current Selected Chest Location: " + ChatColor.WHITE;
 								if(bLoc == null) {
@@ -108,41 +126,23 @@ public class Command {
 								event.getPlayer().sendMessage(location);
 								break;
 							} case CommandDefinition.LOCKCHEST_COMMAND_ADDUSER: {
+								if(plugin.permissions.isCommandRestricted(event.getPlayer(), "lockchest.adduser")) {
+									event.getPlayer().sendMessage("You cannot use this command!");
+									return;
+								}
 								Location cLoc = ChestDefinition.getSelectedChest(event.getPlayer().getName(), plugin.playerList);
 								if(cLoc == null) {
 									event.getPlayer().sendMessage(ChatColor.DARK_GREEN + "None Selected");
 								} else {
-									Chest chest = plugin.dataSource.getChest(cLoc);
+									Chest chest = plugin.dataSource.getChest(cLoc, event.getPlayer().getWorld().getName());
 									if(chest == null) {
 										event.getPlayer().sendMessage(ChatColor.DARK_RED + "Error Reading Chest!");
 									} else {
-										if(Commands.length >= 3) {
-											String ply = Commands[2];
-											if(ply != null) {
-												if(ply.contains(",") && event.getMessage().contains(" lock ")) {
-													String UsersTrimmed = event.getMessage().substring(
-															event.getMessage().indexOf(" lock ") + 7, 
-															event.getMessage().length()).trim();
-													String[] split = processInput(UsersTrimmed.split(","));
-													for(String uName : split) {
-														if(uName != null && uName.trim().length() > 0) {
-															chest.addUser(uName);
-														}
-													}
-												} else if(ply.trim().length() > 0) {
-													chest.addUser(ply);
-												}
-											}
+										if(chest.isLockedForPlayer(event.getPlayer().getName())) {
+											event.getPlayer().sendMessage(ChatColor.DARK_RED + "You cannot access that chest!");
+											return;
 										}
-										if(plugin.dataSource.addChest(chest)) {
-											event.getPlayer().sendMessage(ChatColor.DARK_GREEN + 
-													"Saved Chest at: " + ChatColor.WHITE +
-													chest.locationToString());
-										} else {
-											event.getPlayer().sendMessage(ChatColor.DARK_RED + 
-													"Error Saving Chest at: " + ChatColor.WHITE +
-													chest.locationToString());
-										}
+										ChestDefinition.addUsers(Commands, event.getMessage(), chest, event.getPlayer(), plugin);
 										break;
 									}
 								}
@@ -151,45 +151,23 @@ public class Command {
 								event.getPlayer().sendMessage(ChatColor.GRAY + "    /lockchest adduser player1,player2");
 								break;
 							} case CommandDefinition.LOCKCHEST_COMMAND_REMOVEUSER: {
+								if(plugin.permissions.isCommandRestricted(event.getPlayer(), "lockchest.removeuser")) {
+									event.getPlayer().sendMessage("You cannot use this command!");
+									return;
+								}
 								Location cLoc = ChestDefinition.getSelectedChest(event.getPlayer().getName(), plugin.playerList);
 								if(cLoc == null) {
 									event.getPlayer().sendMessage(ChatColor.DARK_GREEN + "None Selected");
 								} else {
-									Chest chest = plugin.dataSource.getChest(cLoc);
+									Chest chest = plugin.dataSource.getChest(cLoc, event.getPlayer().getWorld().getName());
 									if(chest == null) {
 										event.getPlayer().sendMessage(ChatColor.DARK_RED + "Error Reading Chest!");
 									} else {
-										if(Commands.length >= 3) {
-											String ply = Commands[2];
-											if(ply != null) {
-												if(ply.contains(",") && event.getMessage().contains(" lock ")) {
-													String UsersTrimmed = event.getMessage().substring(
-															event.getMessage().indexOf(" lock ") + 7, 
-															event.getMessage().length()).trim();
-													String[] split = processInput(UsersTrimmed.split(","));
-													for(String uName : split) {
-														if(uName != null && uName.trim().length() > 0) {
-															if(chest.containsPlayer(uName)) {
-																chest.removeUserPlain(uName);
-															}
-														}
-													}
-												} else if(ply.trim().length() > 0) {
-													if(chest.containsPlayer(ply)) {
-														chest.removeUserPlain(ply);
-													}
-												}
-											}
+										if(chest.isLockedForPlayer(event.getPlayer().getName())) {
+											event.getPlayer().sendMessage(ChatColor.DARK_RED + "You cannot access that chest!");
+											return;
 										}
-										if(plugin.dataSource.addChest(chest)) {
-											event.getPlayer().sendMessage(ChatColor.DARK_GREEN + 
-													"Saved Chest at: " + ChatColor.WHITE +
-													chest.locationToString());
-										} else {
-											event.getPlayer().sendMessage(ChatColor.DARK_RED + 
-													"Error Saving Chest at: " + ChatColor.WHITE +
-													chest.locationToString());
-										}
+										ChestDefinition.removeUsers(Commands, event.getMessage(), chest, event.getPlayer(), plugin);
 										break;
 									}
 								}
@@ -232,6 +210,7 @@ public class Command {
 		plugin.playerList.put(player.getName(), args);
 		player.sendMessage(ChatColor.DARK_GREEN + "You may now select a Chest by Right Clicking it.");
 	}
+	
 	public static void LockChest_ArmDisable(LockChest plugin, Player player) {
 		if(plugin.playerList.containsPlayer(player.getName())) {
 			lcPlayerListArgs args = plugin.playerList.getPlayerArgs(player.getName());
