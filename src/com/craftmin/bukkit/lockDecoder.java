@@ -12,11 +12,14 @@ public class lockDecoder {
 	static Random rand = new Random();
 	static int dFail = 0;
 	
-	public static boolean processChest(Player player, Block block) {		
-		int Chance = lcHoe.getHoeChanceVal(player.getItemInHand());
+	public static boolean processChest(Player player, Block block, Settings settings) {
+		if(!settings.isAllowPicking()) {
+			return false;
+		}
+		int Chance = lcHoe.getHoeChanceVal(player.getItemInHand(), settings);
 		
 		if(Chance > 0) {
-			int cal = 40 - (Chance);
+			int cal = settings.getBaseRate() - (Chance);
 			int Success = rand.nextInt(cal);
 			
 			if(Success < Chance) {
@@ -50,8 +53,8 @@ public class lockDecoder {
 		return true;
 	}
 	
-	public static boolean isHoldingHoe(Player player) {
-		int Chance = lcHoe.getHoeChanceVal(player.getItemInHand());
+	public static boolean isHoldingHoe(Player player, Settings settings) {
+		int Chance = lcHoe.getHoeChanceVal(player.getItemInHand(), settings);
 		if(Chance > 0) {
 			return true;
 		}
